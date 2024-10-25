@@ -73,7 +73,6 @@ class RedactorCreationForm(UserCreationForm):
         })
     )
 
-
     class Meta(UserCreationForm.Meta):
         model = Redactor
         fields = ("username",
@@ -102,7 +101,6 @@ class RedactorCreationForm(UserCreationForm):
         if commit:
             redactor.save()
         return redactor
-
 
     def clean_years_of_experience(self):
         return validate_years_of_experience(self.cleaned_data[
@@ -160,7 +158,6 @@ class TopicSearchForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
-
 
 
 class SignUpForm(UserCreationForm):
