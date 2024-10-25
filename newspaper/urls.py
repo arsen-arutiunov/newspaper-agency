@@ -1,13 +1,23 @@
 from django.urls import path
 
-
-from newspaper.views import index, TopicListView, NewspaperListView, \
-    RedactorListView, TopicCreateView, TopicUpdateView, TopicDeleteView, \
-    NewspaperCreateView, NewspaperUpdateView, NewspaperDeleteView, \
-    NewspaperDetailView, RedactorCreateView, RedactorDeleteView, \
-    RedactorYearsOfExperienceUpdateView, toggle_assign_to_newspaper, \
-    RedactorDetailView
-
+from newspaper.views import (
+    index,
+    TopicListView,
+    NewspaperListView,
+    RedactorListView,
+    TopicCreateView,
+    TopicUpdateView,
+    TopicDeleteView,
+    NewspaperCreateView,
+    NewspaperUpdateView,
+    NewspaperDeleteView,
+    NewspaperDetailView,
+    RedactorCreateView,
+    RedactorDeleteView,
+    RedactorYearsOfExperienceUpdateView,
+    RedactorDetailView,
+    ToggleAssignToNewspaperView
+)
 
 urlpatterns = [
     path("", index, name="index"),
@@ -39,7 +49,7 @@ urlpatterns = [
          NewspaperDetailView.as_view(),
          name="newspaper-detail"),
     path("newspapers/<int:pk>/toggle-assign/",
-         toggle_assign_to_newspaper,
+         ToggleAssignToNewspaperView.as_view(),
          name="toggle-assign-to-newspaper"),
     path("redactors/",
          RedactorListView.as_view(),
