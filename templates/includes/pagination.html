@@ -1,0 +1,28 @@
+{% load query_transform %}
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a href="?{% query_transform request page=page_obj.previous_page_number %}"
+           class="btn btn-primary p-2">
+          <i class="fas fa-chevron-left"></i> Prev
+        </a>
+      </li>
+    {% endif %}
+  
+    <li class="page-item">
+      <label class="p-2 m-0">
+        {{ page_obj.number }} of {{ paginator.num_pages }}
+      </label>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a href="?{% query_transform request page=page_obj.next_page_number %}"
+           class="btn btn-primary p-2">
+          Next <i class="fas fa-chevron-right"></i>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

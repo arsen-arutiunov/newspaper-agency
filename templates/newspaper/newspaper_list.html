@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}<title>Newspapers</title>{% endblock %}
+
+{% block content %}
+  <div class="container my-7">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="text-primary mb-0">
+        Newspapers
+      </h1>
+      <form action="" method="get" class="d-flex w-50">
+        <input type="text" name="title" placeholder="Search by title..."
+               class="form-control form-control-lg me-2 h-25 bg-body" value="{{ request.GET.title }}">
+        <input type="submit" value="search" class="btn btn-primary p-2">
+      </form>
+      <a href="{% url 'newspaper:newspaper-create' %}" class="btn btn-primary ms-3">
+        <i class="fas fa-plus"></i> Create
+      </a>
+    </div>
+
+    <div class="row">
+      {% if newspaper_list %}
+        {% for newspaper in newspaper_list %}
+          <div class="col-12 mb-3">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="card-title text-dark mb-0">
+                    <a href="{% url 'newspaper:newspaper-detail' pk=newspaper.id %}"
+                       class="text-decoration-none text-dark">
+                      {{ newspaper.title }}
+                    </a>
+                  </h5>
+                  <div>
+                    <a href="{% url 'newspaper:newspaper-update' pk=newspaper.id %}"
+                       class="btn btn-sm btn-warning me-1">
+                      <i class="fas fa-edit"></i> update
+                    </a>
+                    <a href="{% url 'newspaper:newspaper-delete' pk=newspaper.id %}" class="btn btn-sm btn-danger">
+                      <i class="fas fa-trash"></i> delete
+                    </a>
+                  </div>
+                </div>
+                <p class="card-text mb-1">
+                  <small><strong>Published:</strong> {{ newspaper.published_date|date:"Y-m-d" }}</small>
+                </p>
+                <p class="card-text mb-1">
+                <small>
+                  <strong>Topics:</strong>
+                  <span class="text-muted">
+                    {% for topic in newspaper.topics.all %}
+                      {{ topic.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </span>
+                </small>
+                </p>
+                <p class="card-text mb-1">
+                <small>
+                  <strong>Publishers:</strong>
+                  <span class="text-muted">
+                    {% for publisher in newspaper.publishers.all %}
+                      <a href="{% url 'newspaper:redactor-detail' pk=publisher.id %}">
+                        {{ publisher.username }}
+                      </a>
+                      {% if publisher.first_name and publisher.last_name %}
+                        ({{ publisher.first_name }} {{ publisher.last_name }})
+                      {% endif %}
+                      {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </span>
+                </small>
+                </p>
+                <p class="card-text my-4 mx-auto text-muted" style="max-width: 80%; font-size: larger">
+                  {{ newspaper.short_content }}
+                  <a href="{% url 'newspaper:newspaper-detail' pk=newspaper.id %}"
+                   class="text-decoration-none text-primary" style="font-size: medium">
+                  Read more...
+                </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        {% include "includes/pagination.html" %}
+      {% else %}
+        <p class="text-muted text-center">There are no newspapers in the agency.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
