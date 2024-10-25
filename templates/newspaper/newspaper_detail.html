@@ -20,15 +20,19 @@
           </div>
           <div>
             {% if newspaper in user.newspapers.all %}
-              <a href="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}"
-                 class="btn btn-sm btn-danger">
-                <i class="fas fa-minus-circle"></i> Remove from My Newspapers
-              </a>
+              <form action="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                  <i class="fas fa-minus-circle"></i> Remove from My Newspapers
+                </button>
+              </form>
             {% else %}
-              <a href="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}"
-                 class="btn btn-sm btn-success">
-                <i class="fas fa-plus-circle"></i> Add to My Newspapers
-              </a>
+              <form action="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-success">
+                  <i class="fas fa-plus-circle"></i> Add to My Newspapers
+                </button>
+              </form>
             {% endif %}
           </div>
         </div>
