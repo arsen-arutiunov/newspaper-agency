@@ -1,0 +1,82 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}<title>{{ newspaper.title }}</title>{% endblock %}
+
+{% block content %}
+  <div class="container my-7">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h2 class="text-primary mb-4">{{ newspaper.title }}</h2>
+
+        <div class="d-flex justify-content-between mb-4">
+          <div>
+            <a href="{% url 'newspaper:newspaper-update' pk=newspaper.id %}" class="btn btn-sm btn-warning">
+              <i class="fas fa-edit"></i> Update
+            </a>
+            <a href="{% url 'newspaper:newspaper-delete' pk=newspaper.id %}" class="btn btn-sm btn-danger">
+              <i class="fas fa-trash-alt"></i> Delete
+            </a>
+          </div>
+          <div>
+            {% if newspaper in user.newspapers.all %}
+              <a href="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}"
+                 class="btn btn-sm btn-danger">
+                <i class="fas fa-minus-circle"></i> Remove from My Newspapers
+              </a>
+            {% else %}
+              <a href="{% url 'newspaper:toggle-assign-to-newspaper' pk=newspaper.id %}"
+                 class="btn btn-sm btn-success">
+                <i class="fas fa-plus-circle"></i> Add to My Newspapers
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <hr>
+
+        <p class="card-text mb-1">
+          <small><strong>Published:</strong> {{ newspaper.published_date|date:"Y-m-d" }}</small>
+        </p>
+        <p class="card-text mb-1">
+          <strong>Topics:</strong>
+          <span class="text-muted">
+                    {% for topic in newspaper.topics.all %}
+                      {{ topic.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </span>
+        </p>
+        <p class="card-text mb-1">
+          <strong>Publishers:</strong>
+          <span class="text-muted">
+                    {% for publisher in newspaper.publishers.all %}
+                      <a href="{% url 'newspaper:redactor-detail' pk=publisher.id %}">
+                        {{ publisher.username }}
+                      </a>
+                      {% if publisher.first_name and publisher.last_name %}
+                        ({{ publisher.first_name }} {{ publisher.last_name }})
+                      {% endif %}
+                      {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </span>
+        </p>
+
+        <hr>
+
+        <div class="bg-light p-4 rounded">
+          <p class="mb-0" style="font-size: 1.25rem">{{ newspaper.content }}</p>
+        </div>
+
+        <div class="mt-4 text-muted">
+          <small>Published on: {{ newspaper.published_date }}</small>
+        </div>
+
+        <div class="mt-4">
+          <a href="{% url 'newspaper:newspaper-list' %}" class="btn btn-lg btn-link">
+            Back to Newspapers
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
