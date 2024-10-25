@@ -1,14 +1,21 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic import View
 
-from newspaper.forms import TopicSearchForm, NewspaperSearchForm, \
-    RedactorSearchForm, NewspaperForm, RedactorCreationForm, \
-    RedactorYearsOfExperienceUpdateForm, SignUpForm
+from newspaper.forms import (
+    TopicSearchForm,
+    NewspaperSearchForm,
+    RedactorSearchForm,
+    NewspaperForm,
+    RedactorCreationForm,
+    RedactorYearsOfExperienceUpdateForm,
+    SignUpForm
+)
 from newspaper.models import Redactor, Newspaper, Topic
 
 
@@ -68,7 +75,6 @@ class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
 class NewspaperListView(LoginRequiredMixin, generic.ListView):
     model = Newspaper
     paginate_by = 8
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(NewspaperListView, self).get_context_data(**kwargs)
@@ -150,23 +156,26 @@ class RedactorDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("newspaper:redactor-list")
 
 
-@login_required
-def toggle_assign_to_newspaper(request, pk):
-    redactor = Redactor.objects.get(id=request.user.id)
-    if (
-        Newspaper.objects.get(id=pk) in redactor.newspapers.all()
-    ):
-        redactor.newspapers.remove(pk)
-    else:
-        redactor.newspapers.add(pk)
-    return redirect("newspaper:newspaper-detail", pk=pk)
+class ToggleAssignToNewspaperView(LoginRequiredMixin, View):
+    @staticmethod
+    def post(request, pk, *args, **kwargs):
+        newspaper = get_object_or_404(Newspaper, pk=pk)
+        redactor = request.user
+
+        if newspaper in redactor.newspapers.all():
+            redactor.newspapers.remove(newspaper)
+        else:
+            redactor.newspapers.add(newspaper)
+
+        return redirect("newspaper:newspaper-detail", pk=pk)
+
 
 def login_view(request):
     form = AuthenticationForm(request, data=request.POST or None)
-    if request.method == 'POST' and form.is_valid():
+    if request.method == "POST" and form.is_valid():
         login(request, form.get_user())
         return redirect("/")
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, "accounts/login.html", {"form": form})
 
 
 def register_user(request):
@@ -176,7 +185,7 @@ def register_user(request):
             user = form.save()
             login(request, user)
             return redirect("login")
-        msg = 'Form is not valid'
+        msg = "Form is not valid"
     else:
         form = SignUpForm()
         msg = None
