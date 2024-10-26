@@ -1,15 +1,20 @@
 
 # Newspaper Agency
 
-The Newspaper Agency project is a Django-based application that manages a digital platform for newspaper publications. It includes features to manage topics, newspapers, redactors (editors), and an intuitive interface for users to search, create, and update content within the system.
+The Newspaper Agency project is a Django-based application that manages a digital platform for newspaper publications. 
+It includes features to manage topics, newspapers, redactors (editors), 
+and an intuitive interface for users to search, create, and update content within the system.
 
 ## Features
 
 - **User Authentication**: Users can register, log in, and access personal profiles.
 - **Topic Management**: Users can view, create, update, and delete topics.
-- **Newspaper Management**: Users can create, search, view, update, and delete newspapers and associate them with topics and publishers.
-- **Redactor Management**: Users can search, view, create, update, and delete redactors, along with managing their years of experience.
-- **Dynamic Content Assignment**: Redactors can assign themselves to newspapers, and the assignment status is dynamically managed.
+- **Newspaper Management**: Users can create, search, view, update, and delete newspapers and 
+associate them with topics and publishers.
+- **Redactor Management**: Users can search, view, create, update, and delete redactors, along with 
+managing their years of experience.
+- **Dynamic Content Assignment**: Redactors can assign themselves to newspapers, and the assignment status 
+is dynamically managed.
 
 ## Getting Started
 
@@ -54,6 +59,14 @@ The Newspaper Agency project is a Django-based application that manages a digita
    ```
 
 7. Open the application in your browser at `http://127.0.0.1:8000/`.
+
+## Data Loading
+
+If you'd like to pre-load data into the database, you can use the `load_data.json` file. Run the following command:
+
+```bash
+python manage.py loaddata load_data.json
+```
 
 ## Usage
 
