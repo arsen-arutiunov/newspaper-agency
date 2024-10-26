@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+  <title>
+    {% if request.user == redactor %}
+      My profile
+    {% else %}
+      Profile {{ redactor.username }}
+    {% endif %}
+  </title>
+{% endblock %}
+
+{% block content %}
+  <div class="container my-7">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="sticky-top" style="top: 110px;">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h2 class="card-title text-primary"><i class="fas fa-user"></i> {{ redactor.username }}</h2>
+              <p class="card-text"><strong>First Name:</strong> {{ redactor.first_name }}</p>
+              <p class="card-text"><strong>Last Name:</strong> {{ redactor.last_name }}</p>
+              <p class="card-text"><strong>Email:</strong> {{ redactor.email }}</p>
+              <p class="card-text"><strong>Years of Experience:</strong> {{ redactor.years_of_experience }}</p>
+              <p class="card-text"><strong>Is Staff:</strong> {{ redactor.is_staff|yesno:"Yes,No" }}</p>
+              <div class="d-flex justify-content-between mt-3">
+                <a href="{% url 'newspaper:redactor-delete' pk=redactor.id %}" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </a>
+                <a href="{% url 'newspaper:redactor-years-of-experience-update' pk=redactor.id %}"
+                   class="btn btn-warning btn-sm">
+                  <i class="fas fa-edit"></i> Update Experience
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <h4 class="mb-4"><i class="fas fa-newspaper"></i> Newspapers:</h4>
+        <div class="row">
+          {% if redactor.newspapers.all %}
+            {% for newspaper in redactor.newspapers.all %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title text-primary" style="max-width: 100%; max-height: 50px; overflow: hidden; 
+                      text-overflow: ellipsis; white-space: nowrap;">
+                      <a href="{% url 'newspaper:newspaper-detail' pk=newspaper.id %}"
+                         class="text-decoration-none text-primary">
+                        {{ newspaper.title }}
+                      </a>
+                    </h5>
+                    <p class="card-text">
+                      <strong>Topics:</strong>
+                    <ul class="list-inline mb-0">
+                      {% for topic in newspaper.topics.all %}
+                        <li class="list-inline-item">{{ topic.name }}</li>
+                      {% endfor %}
+                    </ul>
+                    <strong class="text-muted">Newspaper ID:</strong> {{ newspaper.id }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No newspapers!</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
