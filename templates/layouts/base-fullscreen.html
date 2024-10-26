@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" href="/static/assets/img/news.png">
+
+  {% block title %}<title>Sign In</title>{% endblock %}
+
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
+
+  <link id="pagestyle" href="/static/assets/css/material-kit.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body class="{% block body_class %}{% endblock %} bg-gray-200">
+
+{% block content %}{% endblock content %}
+
+<script src="/static/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/static/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/assets/js/material-kit.min.js?v=3.0.0" type="text/javascript"></script>
+
+</body>
+</html>
