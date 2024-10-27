@@ -136,5 +136,5 @@ ASSETS_ROOT = "/static/assets"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_URL = "/accounts/login/"
-LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_URL = "/registration/login/"
+LOGOUT_REDIRECT_URL = "/registration/login/"

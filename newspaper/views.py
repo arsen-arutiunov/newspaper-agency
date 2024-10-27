@@ -175,7 +175,7 @@ def login_view(request):
     if request.method == "POST" and form.is_valid():
         login(request, form.get_user())
         return redirect("/")
-    return render(request, "accounts/login.html", {"form": form})
+    return render(request, "registration/login.html", {"form": form})
 
 
 def register_user(request):
@@ -191,5 +191,5 @@ def register_user(request):
         msg = None
 
     return render(request,
-                  "accounts/register.html",
+                  "registration/register.html",
                   {"form": form, "msg": msg})

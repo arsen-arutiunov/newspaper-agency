@@ -23,10 +23,10 @@ from newspaper.views import login_view, register_user
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("newspaper.urls", namespace="newspaper")),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/login/", login_view, name="login"),
-    path("accounts/logout/",
-         LogoutView.as_view(next_page="/templates/accounts/login.html"),
+    path("registration/", include("django.contrib.auth.urls")),
+    path("registration/login/", login_view, name="login"),
+    path("registration/logout/",
+         LogoutView.as_view(next_page="/templates/registration/login.html"),
          name="logout"),
-    path("accounts/register/", register_user, name="register"),
+    path("registration/register/", register_user, name="register"),
 ]
