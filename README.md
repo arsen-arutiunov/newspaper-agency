@@ -5,6 +5,10 @@ The Newspaper Agency project is a Django-based application that manages a digita
 It includes features to manage topics, newspapers, redactors (editors), 
 and an intuitive interface for users to search, create, and update content within the system.
 
+## Deployment link
+https://newspaper-agency-zl4b.onrender.com/
+
+
 ## Features
 
 - **User Authentication**: Users can register, log in, and access personal profiles.
