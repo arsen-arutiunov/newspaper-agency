@@ -64,6 +64,10 @@ is dynamically managed.
 
 7. Open the application in your browser at `http://127.0.0.1:8000/`.
 
+# Test user:
+- `login: user`
+- `password: user12345`
+
 ## Data Loading
 
 If you'd like to pre-load data into the database, you can use the `load_data.json` file. Run the following command:
